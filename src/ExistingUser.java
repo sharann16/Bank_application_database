@@ -49,7 +49,7 @@ public class ExistingUser {
                     System.out.println("Invalid password");
                     pass2="";
                 }
-            } catch (SQLException e) {
+            } catch (SQLException e) {//
                 throw new RuntimeException(e);
             }
 
