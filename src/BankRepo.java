@@ -181,7 +181,7 @@ public class BankRepo {
             st.executeUpdate();
 
         }catch (SQLException e){
-            System.out.println(e);
+            System.out.println(e);//ig
         }
     }
 
