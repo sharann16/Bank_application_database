@@ -1,9 +1,6 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.*;
@@ -14,7 +11,7 @@ public class NewUser extends  SQLException{
 
 
 //getting the bank account object from main
-    public void generateNewUser(Connection con){
+    public void generateNewUser(){
         Scanner in = new Scanner(System.in);
         String userName=new String();
         String phoneNumber=new String();
@@ -156,35 +153,8 @@ public class NewUser extends  SQLException{
         SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = format.format(dt);
         //using the object we call the method and pass the initial details
-        String insert="insert into userdetail (created_Date,account_number,user_id,user_password,account_type,user_name,phone_number,annual_amount) values(?,?,?,?,?,?,?,?)";
-        String balanc="select balance from usertransaction order by created_D1ate desc limit 1 ";
-        String trans="insert into usertransaction (created_Date,user_id,deposite,balance) values (?,?,?,?)";
-        try{
-            PreparedStatement st= con.prepareStatement(insert);
-                st.setDate(1, java.sql.Date.valueOf(formattedDate));
-            st.setInt(2, (int)accNumber);
-            st.setString(3,userId);
-            st.setString(4,passWord);
-            st.setString(5,accountType);
-            st.setString(6,userName);
-            st.setLong(7, Long.parseLong(phoneNumber));
-            st.setInt(8, (int) anualIncome);
-            st.executeUpdate();
-        }catch (SQLException e){
-            System.out.println(e);
-        }
+        BankRepo repo=new BankRepo();
+        repo.newUserLogin(formattedDate,accNumber,userId,passWord,accountType,userName,phoneNumber,anualIncome,initialAmount);
 
-
-
-            try{
-                PreparedStatement bal=con.prepareStatement(trans);
-                bal.setDate(1, java.sql.Date.valueOf(formattedDate));
-                bal.setString(2,userId);
-                bal.setInt(3, (int) initialAmount);
-                bal.setInt(4, (int) initialAmount);
-                bal.executeUpdate();
-            }catch (SQLException e){
-                System.out.println(e);
-            }
     }
 }
